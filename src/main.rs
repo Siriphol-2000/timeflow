@@ -8,6 +8,7 @@ mod entities;
 mod handler;
 mod routes;
 mod services;
+mod error;
 
 #[actix_web::main]
 async fn main() -> Result<(), std::io::Error> {
