@@ -1,6 +1,9 @@
-use sea_orm::{ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter, Set};
-use crate::{entities::users::{self, ActiveModel}, error::APIError};
+use crate::{
+    entities::users::{self, ActiveModel},
+    error::APIError,
+};
 use sea_orm::prelude::*;
+use sea_orm::{ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter, Set};
 pub async fn create_user(
     db: &DatabaseConnection,
     first_name: String,
@@ -28,7 +31,8 @@ pub async fn find_user_by_email(
     db: &DatabaseConnection,
     email: String,
 ) -> Result<users::Model, APIError> {
-    users::Entity::find().filter(users::Column::Email.eq(email))
+    users::Entity::find()
+        .filter(users::Column::Email.eq(email))
         .one(db)
         .await?
         .ok_or_else(|| APIError::NotFound("Eamil used".into()))

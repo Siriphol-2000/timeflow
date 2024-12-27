@@ -3,19 +3,21 @@ use sea_orm::DatabaseConnection;
 use serde::Deserialize;
 use validator::Validate;
 
-use crate::{error::APIError, services::user::{create_user, find_user_by_email}};
-
+use crate::{
+    error::APIError,
+    services::user::{create_user, find_user_by_email},
+};
 
 #[derive(Debug, Deserialize, Validate)]
-pub struct Register{
+pub struct Register {
     #[validate(length(min = 1, message = "First name cannot be empty"))]
-     first_name: String,
-     #[validate(length(min = 1, message = "Last name cannot be empty"))]
-     last_name: String,
-     #[validate(length(min = 1, message = "Role cannot be empty"))]
-     role: String,
-     #[validate(email)]
-     email: String,
+    first_name: String,
+    #[validate(length(min = 1, message = "Last name cannot be empty"))]
+    last_name: String,
+    #[validate(length(min = 1, message = "Role cannot be empty"))]
+    role: String,
+    #[validate(email)]
+    email: String,
 }
 pub async fn register(
     db: web::Data<DatabaseConnection>,
