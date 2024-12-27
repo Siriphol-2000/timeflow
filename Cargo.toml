@@ -8,6 +8,12 @@ sea-orm = { version = "1.1.2", features = ["runtime-tokio-native-tls","sqlx-post
 actix-web = "4"
 dotenvy="0.15.7"
 tokio = { version = "1", features = ["full"] }
+validator = { version = "0.19.0", features = ["derive"] }
+derive_more = { version = "1.0.0", features = ["display","from"] }
+chrono = "0.4.39"
+serde = "1.0.215"
+log="0.4"
+serde_json = "1.0"
 derive_more = {version = "1.0.0" ,features = ["display","from"]}
 validator = {version ="0.19.0" , features = ["derive"] }
 serde = "1.0.183"
