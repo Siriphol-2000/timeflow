@@ -1,6 +1,6 @@
 use sea_orm::{ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter, Set};
 use crate::{entities::users::{self, ActiveModel}, error::APIError};
-
+use sea_orm::prelude::*;
 pub async fn create_user(
     db: &DatabaseConnection,
     first_name: String,
@@ -13,8 +13,8 @@ pub async fn create_user(
         last_name: Set(last_name),
         role: Set(role),
         email: Set(email),
-        created_at: Default::default(),
-        updated_at: Default::default(),
+        created_at: Set(chrono::Utc::now().into()),
+        updated_at: Set(chrono::Utc::now().into()),
         ..Default::default()
     };
     // Insert the new user into the database
