@@ -1,16 +1,11 @@
 use std::result;
 
 use crate::entities::sites::{self, ActiveModel};
+use crate::handler::sites::SitesRequest;
 use crate::utils::sites_error::{self, SitesError};
 use sea_orm::{sqlx::types::chrono, Set};
 use sea_orm::{ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter};
 
-pub struct SitesRequest {
-    customer_name: String,
-    client_site: String,
-    created_at: chrono::DateTime<chrono::Utc>,
-    updated_at: chrono::DateTime<chrono::Utc>,
-}
 pub async fn create_site(
     db: &DatabaseConnection,
     site: SitesRequest,

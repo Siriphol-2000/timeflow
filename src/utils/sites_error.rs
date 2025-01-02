@@ -13,6 +13,7 @@ pub enum SitesError {
     #[display{"validation error"}]
     #[from]
     SitesValidationError(ValidationErrors),
+    SiteValidateMessageError(String),
 }
 impl From<DbErr> for SitesError {
     fn from(err: DbErr) -> Self {
@@ -60,6 +61,12 @@ impl ResponseError for SitesError {
                     error: "Validation Error".to_string(),
                     message: format!(":{}", validation_errors),
                 }),
+            SitesError::SiteValidateMessageError(err) => {
+                HttpResponse::NotAcceptable().json(ErrResponse {
+                    error: "Validation Error".to_string(),
+                    message: format!(":{}", err),
+                })
+            }
         }
     }
     fn status_code(&self) -> actix_web::http::StatusCode {
@@ -72,6 +79,7 @@ impl ResponseError for SitesError {
             SitesError::SitesQueryError(runtime_err) => StatusCode::INTERNAL_SERVER_ERROR,
             SitesError::SiteNotFoundError(_) => StatusCode::NOT_FOUND,
             SitesError::SitesValidationError(validation_errors) => StatusCode::NOT_ACCEPTABLE,
+            SitesError::SiteValidateMessageError(_) => StatusCode::INTERNAL_SERVER_ERROR,
         }
     }
 }
