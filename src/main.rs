@@ -2,7 +2,7 @@ use std::env;
 
 use actix_web::{web, App, HttpServer};
 use dotenvy::dotenv;
-use routes::{sites::config_sites, time_sheet::config_time_sheet, user::config_user};
+use routes::{sites::config_sites, testexport::config_export, time_sheet::config_time_sheet, user::config_user};
 use sea_orm::Database;
 
 mod entities;
@@ -25,9 +25,9 @@ async fn main() -> Result<(), std::io::Error> {
             .configure(config_user)
             .configure(config_sites)
             .configure(config_time_sheet)
+            .configure(config_export)
     })
     .bind(("127.0.0.1", 8080))?
     .run()
-    .await;
-    Ok(())
+    .await
 }
