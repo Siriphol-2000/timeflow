@@ -85,6 +85,6 @@ impl ResponseError for SitesError {
 }
 #[derive(serde::Serialize)]
 pub struct ErrResponse {
-    error: String,
-    message: String,
+    pub error: String,
+    pub message: String,
 }
