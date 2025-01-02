@@ -2,7 +2,7 @@ use std::env;
 
 use actix_web::{web, App, HttpServer};
 use dotenvy::dotenv;
-use routes::{sites::config_sites, user::config_user};
+use routes::{sites::config_sites, time_sheet::config_time_sheet, user::config_user};
 use sea_orm::Database;
 
 mod entities;
@@ -24,6 +24,7 @@ async fn main() -> Result<(), std::io::Error> {
             .app_data(web::Data::new(db.clone()))
             .configure(config_user)
             .configure(config_sites)
+            .configure(config_time_sheet)
     })
     .bind(("127.0.0.1", 8080))?
     .run()

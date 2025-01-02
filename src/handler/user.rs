@@ -26,6 +26,7 @@ pub async fn register(
     let user = data.into_inner();
     // Validate fields
     user.validate()?;
+
     match find_user_by_email(&db, user.email.clone()).await {
         Ok(_) => {
             return Err(APIError::ValidateMessageError(
