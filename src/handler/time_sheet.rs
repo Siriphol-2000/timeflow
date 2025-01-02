@@ -1,5 +1,5 @@
 use crate::{
-    services::time_sheet::{create_time_sheet as create, find_time_sheet_by_ids, TimeSheetRequest},
+    services::{sites::find_site_by_id, time_sheet::{create_time_sheet as create, find_time_sheet_by_ids, TimeSheetRequest}},
     utils::time_sheet_error::TimeSheetError,
 };
 use actix_web::{web, HttpResponse, Responder};
@@ -12,6 +12,11 @@ pub async fn create_time_sheet(
 ) -> Result<impl Responder, TimeSheetError> {
     let time_sheet = data.into_inner();
     time_sheet.validate()?;
+    find_site_by_id(&db, time_sheet.sites_id).await.map_err(|_|{
+        TimeSheetError::TimeSheetValidateMessageError(
+            "User with the given ID does not exist".to_string(),
+        )
+    })?;
 
     match find_time_sheet_by_ids(&db, time_sheet.users_id, time_sheet.sites_id).await {
         Ok(_) => {

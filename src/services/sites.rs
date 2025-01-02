@@ -34,6 +34,14 @@ pub async fn find_site_by_client_site(
         .filter(sites::Column::ClientSite.eq(site_name))
         .one(db)
         .await?
-        .ok_or_else(|| SitesError::SiteNotFoundError("client site name used".into()));
+        .ok_or_else(|| SitesError::SiteNotFoundError("".into()));
     result
+}
+
+pub async fn find_site_by_id(db: &DatabaseConnection, id: i32) -> Result<sites::Model, SitesError> {
+    sites::Entity::find()
+        .filter(sites::Column::Id.eq(id))
+        .one(db)
+        .await?
+        .ok_or_else(|| SitesError::SiteNotFoundError("".into()))
 }

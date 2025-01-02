@@ -54,5 +54,5 @@ pub async fn find_time_sheet_by_ids(
         .filter(time_sheet::Column::SitesId.eq(sites_id))
         .one(db)
         .await?
-        .ok_or_else(|| TimeSheetError::TimeSheetNotFoundError("time sheet already exist".into()))
+        .ok_or_else(|| TimeSheetError::TimeSheetNotFoundError("".into()))
 }
