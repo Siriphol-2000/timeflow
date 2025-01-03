@@ -1,7 +1,7 @@
 use actix_web::{http::StatusCode, HttpResponse, ResponseError};
 use derive_more::derive::{Display, From};
 use sea_orm::{DbErr, RuntimeErr};
-use validator::{ValidationError, ValidationErrors};
+use validator::{ ValidationErrors};
 
 #[derive(Debug, Display, From)]
 pub enum SitesError {
